@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import java.io.PrintWriter;
 
 public class BurpExtender implements IBurpExtender, IHttpListener, ITab
 {
@@ -22,6 +22,8 @@ public class BurpExtender implements IBurpExtender, IHttpListener, ITab
 
     public static final String EXTENSION_NAME = "Burp Auto Do Intercept"; // Name in extender menu
     public static final String DISPLAY_NAME = "Auto Intercept"; // name for tabs, menu, and other UI components
+
+    private static PrintWriter stdout;
 
     protected IExtensionHelpers helpers;
     protected IBurpExtenderCallbacks callbacks;
@@ -266,6 +268,10 @@ public class BurpExtender implements IBurpExtender, IHttpListener, ITab
         this.callbacks = callbacks;
 
         callbacks.setExtensionName(EXTENSION_NAME);
+        // 定义输出
+        stdout = new PrintWriter(callbacks.getStdout(), true);
+        stdout.println("Author: xiaoxiaoleo");
+        stdout.println("Repo: https://github.com/xiaoxiaoleo/Burp-Auto-Do-Intercept");
 
         this.logger.configure(callbacks.getStdout(), callbacks.getStderr(), LogWriter.DEFAULT_LEVEL);
         final String setting = this.callbacks.loadExtensionSetting(SETTING_LOG_LEVEL);
